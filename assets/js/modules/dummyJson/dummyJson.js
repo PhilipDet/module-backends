@@ -12,22 +12,16 @@ export default function dummyJson() {
 
 function createProducts(products) {
     const productsElement = document.getElementById("products");
-    let html = "";
+    productsElement.innerHTML = "";
     products.forEach((product) => {
-        html += `
-            <img src="${product.thumbnail}" alt="${product.title}" data-title="${product.title}" data-description="${product.description}" />
-        `;
-    });
-    productsElement.innerHTML = html;
+        const productImg = document.createElement("img");
+        productImg.src = product.thumbnail;
 
-    const images = productsElement.querySelectorAll("img");
-    images.forEach((img) => {
-        img.addEventListener("click", (event) => {
-            const thumbnail = event.target.src;
-            const title = event.target.getAttribute("data-title");
-            const description = event.target.getAttribute("data-description");
-            selectProduct(thumbnail, title, description);
-        });
+        productsElement.appendChild(productImg);
+
+        productImg.addEventListener("click", () =>
+            selectProduct(product.thumbnail, product.title, product.description)
+        );
     });
 }
 
